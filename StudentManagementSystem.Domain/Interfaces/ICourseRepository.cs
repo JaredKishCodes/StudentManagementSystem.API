@@ -8,6 +8,7 @@ namespace StudentManagementSystem.Domain.Interfaces
     {
         Task<ICollection<Course>> GetCoursesAsync();
         Task<Course> GetCourseByNameAsync(string name);
+        Task<Course> GetCourseByCodeAsync(string code);
         Task<Course> AddCourseAsync(Course course);
         Task<Course> UpdateCourseAsync(int id, Course course);
         Task<bool> DeleteCourseAsync(int id);

@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using StudentManagementSystem.Domain.Entities;
+
 
 namespace StudentManagementSystem.Application.Dtos
 {
@@ -14,7 +10,7 @@ namespace StudentManagementSystem.Application.Dtos
         [Required]
         public string LastName { get; set; } = string.Empty;
         public DateTime BirthDate { get; set; }
-        public string Gender { get; set; } = string.Empty;
+        public string Gender { get; set; } = string.Empty;  
 
         // Contact Info
         [EmailAddress]
@@ -26,7 +22,9 @@ namespace StudentManagementSystem.Application.Dtos
 
         // Academic Info
         public DateTime EnrollmentDate { get; set; } = DateTime.UtcNow;
-        public string CourseName { get; set; } = null!;
+        
+
+        public string Code { get; set; } = null!;
 
         public int CourseId { get; set; }
 

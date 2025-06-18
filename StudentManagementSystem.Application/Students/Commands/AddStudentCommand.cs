@@ -1,39 +1,54 @@
-﻿using System.Threading;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using StudentManagementSystem.Application.Dtos;
 using StudentManagementSystem.Application.Interfaces;
 using StudentManagementSystem.Domain.Entities;
+using StudentManagementSystem.Domain.Interfaces;
 
 namespace StudentManagementSystem.Application.Students.Commands
 {
-    public record AddStudentCommand(StudentRequestDto student) : IRequest<StudentDTO>;
+    public record AddStudentCommand(StudentRequestDto studentRequestDto) : IRequest<StudentDTO>;
 
-    public class AddStudentCommandHandler : IRequestHandler<AddStudentCommand, StudentDTO>
+    public class AddStudentCommandHandler(IStudentService studentService, ICourseService courseService,ICourseRepository courseRepository)
+        : IRequestHandler<AddStudentCommand, StudentDTO>
     {
-        private readonly IStudentService _studentService;
-
-        public AddStudentCommandHandler(IStudentService studentService)
-        {
-            _studentService = studentService;
-        }
-
         public async Task<StudentDTO> Handle(AddStudentCommand request, CancellationToken cancellationToken)
         {
-            var studentEntity = new Student
+            var code = await courseRepository.GetCourseByCodeAsync(request.studentRequestDto.Code);
+            
+            if (code == null)
             {
-                FirstName = request.student.FirstName,
-                LastName = request.student.LastName,
-                Email = request.student.Email,
-                PhoneNumber = request.student.PhoneNumber,
-                Address = request.student.Address,
-                Gender = request.student.Gender,
-                BirthDate = request.student.BirthDate,
-                EnrollmentDate = request.student.EnrollmentDate,
-                CourseId = request.student.CourseId // ✅ Associate via FK, not CourseDto
+                throw new Exception("Course not found");
+            }
+
+            var newStudent = new Student
+            {
+                FirstName = request.studentRequestDto.FirstName,
+                LastName = request.studentRequestDto.LastName,
+                BirthDate = request.studentRequestDto.BirthDate,
+                Gender = request.studentRequestDto.Gender,
+                Email = request.studentRequestDto.Email,
+                PhoneNumber = request.studentRequestDto.PhoneNumber,
+                Address = request.studentRequestDto.Address,
+                EnrollmentDate = request.studentRequestDto.EnrollmentDate,
+                Course = code,
+                
+                
+               
             };
 
-            return await _studentService.AddStudent(studentEntity);
+            var createdStudent = await studentService.AddStudent(newStudent);
+
+            return new StudentDTO
+            {
+                FirstName = createdStudent.FirstName,
+                LastName = createdStudent.LastName,
+                Email = createdStudent.Email,
+                EnrollmentDate = createdStudent.EnrollmentDate,
+                Course = createdStudent.Course
+            };
         }
     }
 }

@@ -17,6 +17,7 @@ namespace StudentManagementSystem.Application.Courses.Commands
             var newCourse = new CourseRequestDto
             {
                 Name = request.course.Name,
+                Code = request.course.Code,
                 Description = request.course.Description,
                 Units = request.course.Units,
                 Department = request.course.Department,
@@ -28,6 +29,7 @@ namespace StudentManagementSystem.Application.Courses.Commands
             {
                 Id = createdCourse.Id,
                 Name = createdCourse.Name,
+                Code = createdCourse.Code,
                 Description = createdCourse.Description,
                 Units = createdCourse.Units,
                 Department = createdCourse.Department

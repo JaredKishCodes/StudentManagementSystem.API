@@ -1,40 +1,34 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Student_Management_System_API.Helpers;
-using StudentManagementSystem.Application.Courses.Commands;
-using StudentManagementSystem.Application.Courses.Query;
 using StudentManagementSystem.Application.Dtos;
+using StudentManagementSystem.Application.Students.Commands;
+using StudentManagementSystem.Application.Students.Query;
 using StudentManagementSystem.Domain.Entities;
 
 namespace Student_Management_System_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CourseController(ISender sender) : ControllerBase
+    public class EnrollStudentController(ISender sender) : ControllerBase
     {
         [HttpPost]
-        public async Task<ActionResult<CourseDto>> AddCourseAsync(CourseRequestDto course)
+        public async Task<ActionResult<ApiResponse<StudentDTO>>> AddStudent([FromBody] StudentRequestDto student)
         {
             try
             {
-                var result = await sender.Send(new AddCourseCommand(course));
-
-                if (result == null)
-                {
-                    return NotFound("No courses were found");
-                }
-
-                return Ok(new ApiResponse<CourseDto>
+                var result = await sender.Send(new AddStudentCommand(student));
+                return Ok(new ApiResponse<StudentDTO>
                 {
                     Success = true,
-                    Message = "Course added Successfully!",
+                    Message = "Student added sucessfully!",
                     Data = result
                 });
             }
             catch (Exception ex)
             {
+
                 return StatusCode(500, new ApiResponse<string>
                 {
                     Success = false,
@@ -46,27 +40,16 @@ namespace Student_Management_System_API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<CourseDto>>> GetAllCoursesAsync()
+        public async Task<ActionResult<IEnumerable<StudentDTO>>> GetAllStudentsAsync()
         {
             try
             {
-                var result = await sender.Send(new GetAllCoursesQuery());
-
-                if (result == null || !result.Any())
-                {
-                    return StatusCode(200, new ApiResponse<string>
-                    {
-                        Success = false,
-                        Message = "No courses were found.",
-                        Data = null
-                    });
-                }
-
-                return Ok(new ApiResponse<IEnumerable<CourseDto>>
+                var result = await sender.Send(new GetAllStudentsQuery());
+                return Ok(new ApiResponse<IEnumerable<StudentDTO>>
                 {
                     Success = true,
-                    Message = "Course fetched successfully!",
-                    Data = result
+                    Message = "Students fetched sucessfully!",
+                    Data = result,
                 });
             }
             catch (Exception ex)
@@ -76,21 +59,24 @@ namespace Student_Management_System_API.Controllers
                 {
                     Success = false,
                     Message = "An unexpected error occurred.",
-                    Data = ex.InnerException?.Message ?? ex.Message
+                    Data = ex.Message // Or null
                 });
             }
+
+
         }
+
         [HttpGet("{id:int}")]
-        public async Task<ActionResult<CourseDto>> GetCourseByIdAsync(int id)
+        public async Task<ActionResult<StudentDTO>> GetStudentByIdAsync(int id)
         {
             try
             {
-                var result = await sender.Send(new GetCourseById(id));
-                return Ok(new ApiResponse<CourseDto>
+                var result = await sender.Send(new GetStudentByIdQuery(id));
+                return Ok(new ApiResponse<StudentDTO>
                 {
                     Success = true,
-                    Message = "Course fetched successfully",
-                    Data = result
+                    Message = "Student fetched sucessfully!",
+                    Data = result,
                 });
             }
             catch (Exception ex)
@@ -100,23 +86,22 @@ namespace Student_Management_System_API.Controllers
                 {
                     Success = false,
                     Message = "An unexpected error occurred.",
-                    Data = ex.InnerException?.Message ?? ex.Message
+                    Data = ex.Message // Or null
                 });
             }
         }
 
         [HttpPut("{id:int}")]
-        public async Task<ActionResult<CourseDto>> UpdateCourseAsync(int id, CourseRequestDto courseReqDto)
+        public async Task<ActionResult<StudentDTO>> UpdateStudentAsync(int id,StudentRequestDto studentRequestDto)
         {
             try
             {
-                var result = await sender.Send(new UpdateCourseCommand(id, courseReqDto));
-
-                return Ok(new ApiResponse<CourseDto>
+                var result = await sender.Send(new UpdateStudentCommand(id,studentRequestDto));
+                return Ok(new ApiResponse<StudentDTO>
                 {
                     Success = true,
-                    Message = "Course updated sucessfully!",
-                    Data = result
+                    Message = "Student Updated sucessfully!",
+                    Data = result,
                 });
             }
             catch (Exception ex)
@@ -132,27 +117,26 @@ namespace Student_Management_System_API.Controllers
         }
 
         [HttpDelete("{id:int}")]
-        public async Task<ActionResult> DeleteCourseAsync(int id)
+        public async Task<ActionResult<bool>> DeleteStudentAsync(int id)
         {
             try
             {
-                var result = await sender.Send(new DeleteCourseCommand(id));
+                var result = await sender.Send(new DeleteStudentCommand(id));
                 return Ok(new ApiResponse<bool>
                 {
                     Success = true,
-                    Message = "Course deleted successfully!",
-                    Data = result
-
+                    Message = "Student deleted sucessfully!",
+                    Data = result,
                 });
             }
             catch (Exception ex)
             {
 
-                return StatusCode(500, new ApiResponse<string> 
-                { 
+                return StatusCode(500, new ApiResponse<string>
+                {
                     Success = false,
                     Message = "An unexpected error occurred.",
-                    Data = ex.InnerException?.Message ?? ex.Message
+                    Data = ex.Message // Or null
                 });
             }
         }

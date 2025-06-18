@@ -10,7 +10,7 @@ namespace StudentManagementSystem.Application.Services
     {
         public async Task<CourseDto> AddCourseAsync(CourseRequestDto course)
         {
-            var existingCourse = await _courseRepository.GetCourseByNameAsync(course.Name);
+            var existingCourse = await _courseRepository.GetCourseByIdAsync(course.Id);
             if (existingCourse is not null)
             {
                 throw new InvalidOperationException("Course already exists");
@@ -19,6 +19,7 @@ namespace StudentManagementSystem.Application.Services
             var newCourse = new Course
             {
                 Name = course.Name,
+                Code = course.Code,
                 Description = course.Description,
                 Department = course.Department,
                 Units = course.Units
@@ -30,6 +31,7 @@ namespace StudentManagementSystem.Application.Services
             {
                 Id = createdCourse.Id,
                 Name = createdCourse.Name,
+                Code = createdCourse.Code,
                 Description = createdCourse.Description,
                 Department = createdCourse.Department,
                 Units = createdCourse.Units
@@ -56,6 +58,7 @@ namespace StudentManagementSystem.Application.Services
             {
                 Id = course.Id,
                 Name = course.Name,
+                Code = course.Code,
                 Description = course.Description,
                 Department = course.Department,
                 Units = course.Units
@@ -72,6 +75,7 @@ namespace StudentManagementSystem.Application.Services
             {
                 Id = course.Id,
                 Name = course.Name,
+                Code = course.Code,
                 Description = course.Description,
                 Department = course.Department,
                 Units = course.Units
@@ -85,6 +89,7 @@ namespace StudentManagementSystem.Application.Services
             {
                 Id = c.Id,
                 Name = c.Name,
+                Code = c.Code,
                 Description = c.Description,
                 Department = c.Department,
                 Units = c.Units
@@ -95,10 +100,12 @@ namespace StudentManagementSystem.Application.Services
         {
             if (id <= 0) throw new ArgumentException("Invalid Course ID");
 
+            
             var courseEntity = new Course
             {
-                Id = id,
+                
                 Name = course.Name,
+                Code = course.Code,
                 Description = course.Description,
                 Department = course.Department,
                 Units = course.Units
@@ -111,8 +118,9 @@ namespace StudentManagementSystem.Application.Services
 
             return new CourseDto
             {
-                Id = updatedCourse.Id,
+                
                 Name = updatedCourse.Name,
+                Code = updatedCourse.Code,
                 Description = updatedCourse.Description,
                 Department = updatedCourse.Department,
                 Units = updatedCourse.Units

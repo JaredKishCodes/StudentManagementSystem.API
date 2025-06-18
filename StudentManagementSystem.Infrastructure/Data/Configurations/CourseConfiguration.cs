@@ -18,8 +18,9 @@ namespace StudentManagementSystem.Infrastructure.Data.Configurations
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Id).UseIdentityColumn();
 
-            builder.Property(x =>x.Name).HasMaxLength(30).IsRequired();
-            builder.Property(x => x.Description).HasMaxLength(50).IsRequired();
+            builder.Property(x => x.Code).HasMaxLength(10).IsRequired();
+            builder.Property(x =>x.Name).HasMaxLength(70).IsRequired();
+            builder.Property(x => x.Description).HasMaxLength(500).IsRequired();
             builder.Property(x => x.Units).IsRequired();
             builder.Property(x => x.Department).IsRequired();
 

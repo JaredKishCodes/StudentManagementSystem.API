@@ -10,7 +10,7 @@ using StudentManagementSystem.Domain.Interfaces;
 
 namespace StudentManagementSystem.Application.Services
 {
-    public class StudentService(IStudentRepository _studentRepository) : IStudentService
+    public class StudentService(IStudentRepository _studentRepository,ICourseRepository _courseRepository) : IStudentService
     {
         public async Task<StudentDTO> AddStudent(Student student)
         {
@@ -23,6 +23,7 @@ namespace StudentManagementSystem.Application.Services
             var createdStudent =  await _studentRepository.AddStudent(student);
 
             return new StudentDTO { 
+                Id = createdStudent.Id,
                 FirstName = createdStudent.FirstName,
                 LastName = createdStudent.LastName,
                 Email = createdStudent.Email,
@@ -50,6 +51,7 @@ namespace StudentManagementSystem.Application.Services
                 throw new Exception("No students found.");
 
             return students.Select(student => new StudentDTO {
+                Id = student.Id,
                 FirstName = student.FirstName,
                 LastName = student.LastName,
                 Email = student.Email,
@@ -69,7 +71,8 @@ namespace StudentManagementSystem.Application.Services
            var result =   await _studentRepository.GetStudentByIdAsync(id);
 
             return new StudentDTO
-            {
+            {   
+                Id = result.Id,
                 FirstName = result.FirstName,
                 LastName = result.LastName,
                 Email = result.Email,
@@ -85,10 +88,19 @@ namespace StudentManagementSystem.Application.Services
             var existing = await _studentRepository.GetStudentByIdAsync(id);
             if (existing == null) throw new Exception("Student not found");
 
-            var result =  await _studentRepository.UpdateStudent(id, student);
+            // 🟡 Resolve course ID from name
+            var course = await _courseRepository.GetCourseByNameAsync(student.Course.Name);
+            if (course == null)
+                throw new Exception("Course not found");
+
+            // ✅ Assign the valid course ID
+            student.CourseId = course.Id;
+
+            var result = await _studentRepository.UpdateStudent(id, student);
 
             return new StudentDTO
             {
+                Id = result.Id,
                 FirstName = result.FirstName,
                 LastName = result.LastName,
                 Email = result.Email,
@@ -96,5 +108,6 @@ namespace StudentManagementSystem.Application.Services
                 Course = result.Course.Name,
             };
         }
+
     }
 }

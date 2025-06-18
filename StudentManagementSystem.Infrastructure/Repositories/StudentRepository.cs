@@ -45,13 +45,16 @@ namespace StudentManagementSystem.Infrastructure.Repositories
 
         public async Task<IEnumerable<Student>> GetAllStudentsAsync()
         {
-            return await _dbContext.Students.ToListAsync();
-
+            return await _dbContext.Students
+                    .Include(s => s.Course) 
+                    .ToListAsync();
         }
 
         public async Task<Student> GetStudentByIdAsync(int id)
         {
-            var student = await _dbContext.Students.FirstOrDefaultAsync(x => x.Id == id);
+            var student = await _dbContext.Students
+                .Include(x => x.Course)
+                .FirstOrDefaultAsync(x => x.Id == id);
 
             return student;
         }

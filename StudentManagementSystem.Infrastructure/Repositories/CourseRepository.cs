@@ -32,6 +32,11 @@ namespace StudentManagementSystem.Infrastructure.Repositories
             return false;
         }
 
+        public async Task<Course> GetCourseByCodeAsync(string code)
+        {
+            return await _dbContext.Courses.FirstOrDefaultAsync(x => x.Code == code);
+        }
+
         public async Task<Course> GetCourseByIdAsync(int id)
         {
             return await _dbContext.Courses.FindAsync(id);
@@ -39,13 +44,9 @@ namespace StudentManagementSystem.Infrastructure.Repositories
 
         public async Task<Course> GetCourseByNameAsync(string name)
         {
-            var courseName = await _dbContext.Courses.FirstOrDefaultAsync(x => x.Name == name);
+            return await _dbContext.Courses.FirstOrDefaultAsync(x => x.Name == name);
 
-            if (courseName is  null)
-            {
-                throw new Exception("Course name can not be found");
-            }
-            return courseName;
+            
         }
 
         public async Task<ICollection<Course>> GetCoursesAsync()
@@ -63,6 +64,7 @@ namespace StudentManagementSystem.Infrastructure.Repositories
             }
 
             result.Name = course.Name;
+            result.Code = course.Code;
             result.Description = course.Description;
             result.Department = course.Department;
 
