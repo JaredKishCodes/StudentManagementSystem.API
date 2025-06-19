@@ -1,15 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace StudentManagementSystem.Application.Dtos
+﻿namespace StudentManagementSystem.Application.Dtos.Course.Requests
 {
-    public class CourseDto
+   public  class CourseRequestDto
     {
         public int Id { get; set; }
-
         public string Code { get; set; } = null!;
         public string Name { get; set; } = string.Empty;
         public string? Description { get; set; }

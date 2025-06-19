@@ -1,5 +1,6 @@
 ﻿// Application Layer - CourseService
-using StudentManagementSystem.Application.Dtos;
+using StudentManagementSystem.Application.Dtos.Course.Requests;
+using StudentManagementSystem.Application.Dtos.Course.Response;
 using StudentManagementSystem.Application.Interfaces;
 using StudentManagementSystem.Domain.Entities;
 using StudentManagementSystem.Domain.Interfaces;
@@ -22,7 +23,8 @@ namespace StudentManagementSystem.Application.Services
                 Code = course.Code,
                 Description = course.Description,
                 Department = course.Department,
-                Units = course.Units
+                Units = course.Units,
+               
             };
 
             var createdCourse = await _courseRepository.AddCourseAsync(newCourse);
@@ -61,7 +63,8 @@ namespace StudentManagementSystem.Application.Services
                 Code = course.Code,
                 Description = course.Description,
                 Department = course.Department,
-                Units = course.Units
+                Units = course.Units,
+                SubjectCount = course.Subjects.Count
             };
         }
 
@@ -78,7 +81,8 @@ namespace StudentManagementSystem.Application.Services
                 Code = course.Code,
                 Description = course.Description,
                 Department = course.Department,
-                Units = course.Units
+                Units = course.Units,
+                SubjectCount = course.Subjects.Count
             };
         }
 
@@ -92,7 +96,8 @@ namespace StudentManagementSystem.Application.Services
                 Code = c.Code,
                 Description = c.Description,
                 Department = c.Department,
-                Units = c.Units
+                Units = c.Units,
+                SubjectCount = c.Subjects.Count
             }).ToList();
         }
 

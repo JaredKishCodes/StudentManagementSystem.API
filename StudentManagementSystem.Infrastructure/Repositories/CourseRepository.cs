@@ -39,19 +39,19 @@ namespace StudentManagementSystem.Infrastructure.Repositories
 
         public async Task<Course> GetCourseByIdAsync(int id)
         {
-            return await _dbContext.Courses.FindAsync(id);
+            return await _dbContext.Courses.Include(x => x.Subjects).FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public async Task<Course> GetCourseByNameAsync(string name)
         {
-            return await _dbContext.Courses.FirstOrDefaultAsync(x => x.Name == name);
+            return await _dbContext.Courses.Include(x => x.Subjects).FirstOrDefaultAsync(x => x.Name == name);
 
             
         }
 
         public async Task<ICollection<Course>> GetCoursesAsync()
         {
-            return await _dbContext.Courses.ToListAsync();
+            return await _dbContext.Courses.Include(x => x.Subjects).ToListAsync();
         }
 
         public async Task<Course> UpdateCourseAsync(int id, Course course)

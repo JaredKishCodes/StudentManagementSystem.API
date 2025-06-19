@@ -1,6 +1,6 @@
-﻿
+﻿using StudentManagementSystem.Application.Dtos.Student.Requests;
 
-namespace StudentManagementSystem.Application.Dtos
+namespace StudentManagementSystem.Application.Dtos.Student.Response
 {
     public class StudentDTO
     {
@@ -11,6 +11,6 @@ namespace StudentManagementSystem.Application.Dtos
         
         public string Email { get; set; } = string.Empty;
         public DateTime EnrollmentDate { get; set; } = DateTime.UtcNow;
-        public string Course { get; set; } = null!;
+        public CourseSummaryDto Course { get; set; } = null!;
     }
 }

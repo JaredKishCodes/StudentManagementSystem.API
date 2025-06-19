@@ -1,7 +1,8 @@
 ﻿
 
 using MediatR;
-using StudentManagementSystem.Application.Dtos;
+using StudentManagementSystem.Application.Dtos.Student.Requests;
+using StudentManagementSystem.Application.Dtos.Student.Response;
 using StudentManagementSystem.Application.Interfaces;
 using StudentManagementSystem.Domain.Entities;
 using StudentManagementSystem.Domain.Interfaces;

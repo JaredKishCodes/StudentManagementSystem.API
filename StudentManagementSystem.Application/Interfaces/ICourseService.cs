@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using StudentManagementSystem.Application.Dtos;
+using StudentManagementSystem.Application.Dtos.Course.Requests;
+using StudentManagementSystem.Application.Dtos.Course.Response;
 using StudentManagementSystem.Domain.Entities;
 
 namespace StudentManagementSystem.Application.Interfaces

@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 
-namespace StudentManagementSystem.Application.Dtos
+namespace StudentManagementSystem.Application.Dtos.Course.Requests
 {
     public class CourseNameDto
     {

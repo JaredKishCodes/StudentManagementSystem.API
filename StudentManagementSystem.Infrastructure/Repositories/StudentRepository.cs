@@ -46,7 +46,8 @@ namespace StudentManagementSystem.Infrastructure.Repositories
         public async Task<IEnumerable<Student>> GetAllStudentsAsync()
         {
             return await _dbContext.Students
-                    .Include(s => s.Course) 
+                    .Include(s => s.Course)
+                    .ThenInclude(s => s.Subjects) 
                     .ToListAsync();
         }
 
@@ -54,6 +55,7 @@ namespace StudentManagementSystem.Infrastructure.Repositories
         {
             var student = await _dbContext.Students
                 .Include(x => x.Course)
+                .ThenInclude(x => x.Subjects)
                 .FirstOrDefaultAsync(x => x.Id == id);
 
             return student;

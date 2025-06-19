@@ -15,6 +15,7 @@ namespace StudentManagementSystem.Application
         {   
             services.AddScoped<IStudentService, StudentService>();
             services.AddScoped<ICourseService, CourseService>();
+            services.AddScoped<ISubjectService, SubjectService>();
 
             services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(DependencyInjection).Assembly));
 

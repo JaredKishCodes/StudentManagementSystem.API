@@ -18,6 +18,8 @@ namespace StudentManagementSystem.Infrastructure
 
             services.AddScoped<IStudentRepository, StudentRepository>();
             services.AddScoped<ICourseRepository, CourseRepository>();
+            services.AddScoped<ISubjectRepository, SubjectRepository>();
+
 
             return services;
         }

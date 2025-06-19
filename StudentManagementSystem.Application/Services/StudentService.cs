@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using StudentManagementSystem.Application.Dtos;
+using StudentManagementSystem.Application.Dtos.Student.Requests;
+using StudentManagementSystem.Application.Dtos.Student.Response;
 using StudentManagementSystem.Application.Interfaces;
 using StudentManagementSystem.Domain.Entities;
 using StudentManagementSystem.Domain.Interfaces;
@@ -28,7 +29,11 @@ namespace StudentManagementSystem.Application.Services
                 LastName = createdStudent.LastName,
                 Email = createdStudent.Email,
                 EnrollmentDate = createdStudent.EnrollmentDate,
-                Course = createdStudent.Course?.Name ?? "Unknown",
+                Course = new CourseSummaryDto
+                {
+                    Name = student.Course.Name,
+                    SubjectCount = student.Course.Subjects.Count
+                },
             };
 
         }
@@ -56,7 +61,11 @@ namespace StudentManagementSystem.Application.Services
                 LastName = student.LastName,
                 Email = student.Email,
                 EnrollmentDate = student.EnrollmentDate,
-                Course = student.Course.Name ?? "Unknown",
+                Course = new CourseSummaryDto
+                {
+                    Name = student.Course.Name,
+                    SubjectCount = student.Course.Subjects.Count
+                },
             });
             
 
@@ -77,7 +86,11 @@ namespace StudentManagementSystem.Application.Services
                 LastName = result.LastName,
                 Email = result.Email,
                 EnrollmentDate = result.EnrollmentDate,
-                Course = result.Course.Name,
+                Course = new CourseSummaryDto
+                {
+                    Name = result.Course.Name,
+                    SubjectCount = result.Course.Subjects.Count
+                },
             };
         }
 
@@ -88,12 +101,12 @@ namespace StudentManagementSystem.Application.Services
             var existing = await _studentRepository.GetStudentByIdAsync(id);
             if (existing == null) throw new Exception("Student not found");
 
-            // 🟡 Resolve course ID from name
+            
             var course = await _courseRepository.GetCourseByNameAsync(student.Course.Name);
             if (course == null)
                 throw new Exception("Course not found");
 
-            // ✅ Assign the valid course ID
+            
             student.CourseId = course.Id;
 
             var result = await _studentRepository.UpdateStudent(id, student);
@@ -105,7 +118,11 @@ namespace StudentManagementSystem.Application.Services
                 LastName = result.LastName,
                 Email = result.Email,
                 EnrollmentDate = result.EnrollmentDate,
-                Course = result.Course.Name,
+                Course = new CourseSummaryDto
+                {
+                    Name = result.Course.Name,
+                    SubjectCount = result.Course.Subjects.Count
+                },
             };
         }
 

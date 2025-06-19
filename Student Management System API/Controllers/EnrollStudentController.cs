@@ -2,7 +2,8 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Student_Management_System_API.Helpers;
-using StudentManagementSystem.Application.Dtos;
+using StudentManagementSystem.Application.Dtos.Student.Requests;
+using StudentManagementSystem.Application.Dtos.Student.Response;
 using StudentManagementSystem.Application.Students.Commands;
 using StudentManagementSystem.Application.Students.Query;
 using StudentManagementSystem.Domain.Entities;

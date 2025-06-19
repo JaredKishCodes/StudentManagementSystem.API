@@ -5,7 +5,7 @@ using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 using MediatR;
-using StudentManagementSystem.Application.Dtos;
+using StudentManagementSystem.Application.Dtos.Student.Response;
 using StudentManagementSystem.Application.Interfaces;
 
 namespace StudentManagementSystem.Application.Students.Query

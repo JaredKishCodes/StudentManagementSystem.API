@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 
 
-namespace StudentManagementSystem.Application.Dtos
+namespace StudentManagementSystem.Application.Dtos.Student.Requests
 {
     public class StudentRequestDto
     {

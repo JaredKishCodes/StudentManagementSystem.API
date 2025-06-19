@@ -15,5 +15,6 @@ namespace StudentManagementSystem.Domain.Entities
 
 
         public ICollection<Student> Students { get; set; } = new List<Student>();
+        public ICollection<Subject> Subjects { get; set; } = new List<Subject>();
     }
 }

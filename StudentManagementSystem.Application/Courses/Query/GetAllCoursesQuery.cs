@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MediatR;
-using StudentManagementSystem.Application.Dtos;
+using StudentManagementSystem.Application.Dtos.Course.Response;
 using StudentManagementSystem.Application.Interfaces;
 
 namespace StudentManagementSystem.Application.Courses.Query

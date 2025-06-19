@@ -1,6 +1,7 @@
 ﻿
 using MediatR;
-using StudentManagementSystem.Application.Dtos;
+using StudentManagementSystem.Application.Dtos.Course.Requests;
+using StudentManagementSystem.Application.Dtos.Course.Response;
 using StudentManagementSystem.Application.Interfaces;
 
 namespace StudentManagementSystem.Application.Courses.Commands
