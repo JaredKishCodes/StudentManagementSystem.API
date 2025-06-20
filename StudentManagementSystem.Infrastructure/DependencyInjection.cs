@@ -5,10 +5,12 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using StudentManagementSystem.Application.Interfaces;
 using StudentManagementSystem.Domain.Interfaces;
 using StudentManagementSystem.Infrastructure.Data;
 using StudentManagementSystem.Infrastructure.Entities;
 using StudentManagementSystem.Infrastructure.Repositories;
+using StudentManagementSystem.Infrastructure.Service;
 
 namespace StudentManagementSystem.Infrastructure
 {
@@ -23,6 +25,7 @@ namespace StudentManagementSystem.Infrastructure
             services.AddScoped<IStudentRepository, StudentRepository>();
             services.AddScoped<ICourseRepository, CourseRepository>();
             services.AddScoped<ISubjectRepository, SubjectRepository>();
+            services.AddScoped<IJwtTokenService, JwtTokenService>();
 
             services.AddIdentityCore<AppUser>(options =>
             {
