@@ -1,13 +1,11 @@
 ﻿using MediatR;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Student_Management_System_API.Helpers;
 using StudentManagementSystem.Application.Courses.Commands;
 using StudentManagementSystem.Application.Courses.Query;
 using StudentManagementSystem.Application.Dtos.Course.Requests;
 using StudentManagementSystem.Application.Dtos.Course.Response;
-using StudentManagementSystem.Domain.Entities;
 
 namespace Student_Management_System_API.Controllers
 {
@@ -15,7 +13,8 @@ namespace Student_Management_System_API.Controllers
     [ApiController]
     public class CourseController(ISender sender) : ControllerBase
     {
-        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        [HttpPost("AddCourse")]
         public async Task<ActionResult<CourseDto>> AddCourseAsync(CourseRequestDto course)
         {
             try
@@ -46,7 +45,7 @@ namespace Student_Management_System_API.Controllers
 
         }
 
-        [HttpGet]
+        [HttpGet("GetAll")]
         public async Task<ActionResult<IEnumerable<CourseDto>>> GetAllCoursesAsync()
         {
             try
@@ -106,6 +105,7 @@ namespace Student_Management_System_API.Controllers
             }
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPut("{id:int}")]
         public async Task<ActionResult<CourseDto>> UpdateCourseAsync(int id, CourseRequestDto courseReqDto)
         {
@@ -131,7 +131,7 @@ namespace Student_Management_System_API.Controllers
                 });
             }
         }
-
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id:int}")]
         public async Task<ActionResult> DeleteCourseAsync(int id)
         {

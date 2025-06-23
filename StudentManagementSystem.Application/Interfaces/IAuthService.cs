@@ -1,10 +1,11 @@
-﻿using StudentManagementSystem.Application.Dtos.Auth;
+﻿using StudentManagementSystem.Application.Common;
+using StudentManagementSystem.Application.Dtos.Auth;
 
 namespace StudentManagementSystem.Application.Interfaces
 {
-     interface IAuthService
+   public interface IAuthService
     {
-        string Login(LoginDto loginDto);
-        string Register(RegisterDto registerDto);
+        Task<Result<AuthResponseDto>> Login(LoginDto loginDto);
+        Task<Result<AuthResponseDto>> Register(RegisterDto registerDto);
     }
 }

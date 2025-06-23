@@ -1,10 +1,12 @@
 ﻿
 namespace StudentManagementSystem.Domain.Entities
 {
-    public class UserBase
+    public interface IUserBase
     {
-        public string Id { get; set; }
-        public string Email { get; set; }
-        public string Username { get; set; }
+            string Id { get; }
+            string Email { get; }
+            string UserName { get; }
+        
+
     }
 }

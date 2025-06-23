@@ -32,9 +32,9 @@ namespace StudentManagementSystem.Infrastructure.Data
                 },
                 new IdentityRole
                 {
-                    Id = "student-role-id",
-                    Name = "Student",
-                    NormalizedName = "STUDENT"
+                    Id = "user-role-id",
+                    Name = "User",
+                    NormalizedName = "USER"
                 }
             };
 

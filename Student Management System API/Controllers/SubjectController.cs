@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Student_Management_System_API.Helpers;
@@ -14,7 +15,7 @@ namespace Student_Management_System_API.Controllers
     [ApiController]
     public class SubjectController(ISender sender) : ControllerBase
     {
-        [HttpGet]
+        [HttpGet("GetAllSubjects")]
         public async Task<ActionResult<IEnumerable<SubjectRequestDto>>> GetAllSubjects()
         {
             try
@@ -66,7 +67,8 @@ namespace Student_Management_System_API.Controllers
             }
         }
 
-        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        [HttpPost("AddSubject")]
         public async Task<ActionResult<SubjectRequestDto>> AddSubjectAsync(SubjectRequestDto subjectRequestDto)
         {
             try
@@ -92,6 +94,7 @@ namespace Student_Management_System_API.Controllers
             }
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPut("{id:int}")]
         public async Task<ActionResult<SubjectRequestDto>> UpdateSubjectAsync(int id, SubjectRequestDto subjectRequestDto)
         {
@@ -118,6 +121,7 @@ namespace Student_Management_System_API.Controllers
             }
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id:int}")]
         public async Task<ActionResult<bool>> DeleteSubjectAsync(int id)
         {

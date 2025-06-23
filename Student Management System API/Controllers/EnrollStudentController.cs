@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Student_Management_System_API.Helpers;
@@ -14,7 +15,8 @@ namespace Student_Management_System_API.Controllers
     [ApiController]
     public class EnrollStudentController(ISender sender) : ControllerBase
     {
-        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        [HttpPost("AddStudent")]
         public async Task<ActionResult<ApiResponse<StudentDTO>>> AddStudent([FromBody] StudentRequestDto student)
         {
             try
@@ -40,7 +42,7 @@ namespace Student_Management_System_API.Controllers
 
         }
 
-        [HttpGet]
+        [HttpGet("GetAllStudents")]
         public async Task<ActionResult<IEnumerable<StudentDTO>>> GetAllStudentsAsync()
         {
             try
@@ -92,6 +94,7 @@ namespace Student_Management_System_API.Controllers
             }
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPut("{id:int}")]
         public async Task<ActionResult<StudentDTO>> UpdateStudentAsync(int id,StudentRequestDto studentRequestDto)
         {
@@ -117,6 +120,7 @@ namespace Student_Management_System_API.Controllers
             }
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id:int}")]
         public async Task<ActionResult<bool>> DeleteStudentAsync(int id)
         {

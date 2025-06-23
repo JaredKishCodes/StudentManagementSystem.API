@@ -19,6 +19,8 @@ namespace StudentManagementSystem.Application.Dtos.Auth
         [EmailAddress]
         public string Email { get; set; }
         [Required]
+        public string UserName { get; set; }
+        [Required]
         [MinLength(5)]
         public string Password { get; set; }
         [Required]

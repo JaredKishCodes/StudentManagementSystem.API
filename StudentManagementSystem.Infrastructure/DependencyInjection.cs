@@ -11,6 +11,7 @@ using StudentManagementSystem.Infrastructure.Data;
 using StudentManagementSystem.Infrastructure.Entities;
 using StudentManagementSystem.Infrastructure.Repositories;
 using StudentManagementSystem.Infrastructure.Service;
+using StudentManagementSystem.Infrastructure.Services;
 
 namespace StudentManagementSystem.Infrastructure
 {
@@ -26,6 +27,7 @@ namespace StudentManagementSystem.Infrastructure
             services.AddScoped<ICourseRepository, CourseRepository>();
             services.AddScoped<ISubjectRepository, SubjectRepository>();
             services.AddScoped<IJwtTokenService, JwtTokenService>();
+            services.AddScoped<IAuthService, AuthService>();
 
             services.AddIdentityCore<AppUser>(options =>
             {
@@ -56,7 +58,19 @@ namespace StudentManagementSystem.Infrastructure
                     IssuerSigningKey = new SymmetricSecurityKey
                     (System.Text.Encoding.UTF8.GetBytes(configuration["JWT:SigningKey"]))
                 };
-            });
+
+                     // existing config...
+                     options.Events = new JwtBearerEvents
+                     {
+                         OnAuthenticationFailed = context =>
+                         {
+                             Console.WriteLine($"Authentication failed: {context.Exception.Message}");
+                             return Task.CompletedTask;
+                         }
+                     };
+                 });
+
+
 
 
 
